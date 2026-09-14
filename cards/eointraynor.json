@@ -1,0 +1,19 @@
+{
+  "name": "Eoin Traynor",
+  "handle": "eointraynor",
+  "jobTitle": "Engineering Manager",
+  "company": "CrowdStrike",
+  "tagline": "Engineering leadership, cloud security & scale.",
+  "location": "Berlin",
+  "theme": {
+    "primaryColor": "#ff4a4a",
+    "companyColor": "#ff5555",
+    "borderColor": "#4c566a"
+  },
+  "links": {
+    "website": "https://www.eointraynor.com",
+    "github": "https://github.com/EoinTraynor",
+    "linkedin": "https://www.linkedin.com/in/eointraynor/",
+    "twitter": "https://twitter.com/EoinTraynor1"
+  }
+}

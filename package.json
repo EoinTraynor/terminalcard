@@ -1,0 +1,59 @@
+{
+  "name": "terminalcard",
+  "version": "1.0.0",
+  "description": "Universal terminal business card runner and interactive card generator",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EoinTraynor/terminalcard.git"
+  },
+  "homepage": "https://github.com/EoinTraynor/terminalcard#readme",
+  "bugs": {
+    "url": "https://github.com/EoinTraynor/terminalcard/issues"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "terminalcard": "dist/index.js",
+    "termcard": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "cards"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "terminal",
+    "business-card",
+    "vcard",
+    "cli",
+    "card",
+    "portfolio",
+    "terminalcard",
+    "npx"
+  ],
+  "author": {
+    "name": "Eoin Traynor",
+    "url": "https://eointraynor.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@inquirer/prompts": "^7.2.1",
+    "@types/node": "^22.10.1",
+    "boxen": "^8.0.1",
+    "chalk": "^5.3.0",
+    "open": "^10.1.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
