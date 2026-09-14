@@ -1,6 +1,6 @@
 {
   "name": "terminalcard",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Universal terminal business card runner and interactive card generator",
   "type": "module",
   "repository": {
