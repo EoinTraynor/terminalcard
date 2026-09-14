@@ -4,71 +4,86 @@ import chalk from "chalk";
 import type { TerminalCardConfig } from "../types.js";
 
 /**
+ * Validates that a URL string uses a safe HTTP or HTTPS protocol.
+ * Rejects javascript:, file:, data:, or shell commands.
+ */
+export function isSafeWebUrl(urlString?: string): boolean {
+  if (!urlString || typeof urlString !== "string") return false;
+  try {
+    const parsed = new URL(urlString);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Runs an interactive arrow-key menu enabling the user to open links
  * in their default browser, view bio, or create their own card.
  */
 export async function runInteractiveMenu(config: TerminalCardConfig): Promise<void> {
+  const links = config?.links && typeof config.links === "object" ? config.links : {};
+  const customLinks = Array.isArray(config?.customLinks) ? config.customLinks : [];
+
   while (true) {
     try {
       const choices: Array<{ name: string; value: string; description?: string }> = [];
 
-      if (config.links.website) {
+      if (links.website) {
         choices.push({
           name: `${chalk.hex("#61afef")("🌐")} Open Website`,
-          value: `url:${config.links.website}`,
-          description: config.links.website,
+          value: `url:${links.website}`,
+          description: links.website,
         });
       }
 
-      if (config.links.github) {
+      if (links.github) {
         choices.push({
           name: `${chalk.hex("#98c379")("🐙")} Open GitHub`,
-          value: `url:${config.links.github}`,
-          description: config.links.github,
+          value: `url:${links.github}`,
+          description: links.github,
         });
       }
 
-      if (config.links.linkedin) {
+      if (links.linkedin) {
         choices.push({
           name: `${chalk.hex("#61afef")("💼")} Open LinkedIn`,
-          value: `url:${config.links.linkedin}`,
-          description: config.links.linkedin,
+          value: `url:${links.linkedin}`,
+          description: links.linkedin,
         });
       }
 
-      if (config.links.twitter) {
+      if (links.twitter) {
         choices.push({
           name: `${chalk.hex("#e5c07b")("🐦")} Open Twitter/X`,
-          value: `url:${config.links.twitter}`,
-          description: config.links.twitter,
+          value: `url:${links.twitter}`,
+          description: links.twitter,
         });
       }
 
-      if (config.links.bluesky) {
+      if (links.bluesky) {
         choices.push({
           name: `${chalk.hex("#00f0ff")("🦋")} Open Bluesky`,
-          value: `url:${config.links.bluesky}`,
-          description: config.links.bluesky,
+          value: `url:${links.bluesky}`,
+          description: links.bluesky,
         });
       }
 
-      if (config.links.mastodon) {
+      if (links.mastodon) {
         choices.push({
           name: `${chalk.hex("#bf5af2")("🐘")} Open Mastodon`,
-          value: `url:${config.links.mastodon}`,
-          description: config.links.mastodon,
+          value: `url:${links.mastodon}`,
+          description: links.mastodon,
         });
       }
 
-      if (config.customLinks) {
-        for (const cl of config.customLinks) {
-          if (cl.label && cl.url) {
-            choices.push({
-              name: `${chalk.hex("#e5c07b")("🔗")} Open ${cl.label}`,
-              value: `url:${cl.url}`,
-              description: cl.url,
-            });
-          }
+      for (const cl of customLinks) {
+        if (cl && typeof cl === "object" && cl.label && cl.url) {
+          choices.push({
+            name: `${chalk.hex("#e5c07b")("🔗")} Open ${cl.label}`,
+            value: `url:${cl.url}`,
+            description: cl.url,
+          });
         }
       }
 
@@ -76,7 +91,7 @@ export async function runInteractiveMenu(config: TerminalCardConfig): Promise<vo
       choices.push({
         name: `${chalk.hex("#c678dd")("📄")} View About & Bio`,
         value: "bio",
-        description: `Learn more about ${config.name}`,
+        description: `Learn more about ${config.name || "user"}`,
       });
 
       // Discoverability: Create your own card
@@ -100,6 +115,10 @@ export async function runInteractiveMenu(config: TerminalCardConfig): Promise<vo
 
       if (choice.startsWith("url:")) {
         const targetUrl = choice.slice(4);
+        if (!isSafeWebUrl(targetUrl)) {
+          console.log(chalk.red(`\n  ⚠ Blocked potentially unsafe URL: ${targetUrl}\n`));
+          continue;
+        }
         console.log(chalk.hex("#61afef")(`\n  Opening ${targetUrl}...\n`));
         await open(targetUrl);
       } else if (choice === "bio") {
@@ -118,8 +137,8 @@ export async function runInteractiveMenu(config: TerminalCardConfig): Promise<vo
         if (config.location) {
           console.log(`  ${chalk.dim(`Location: ${config.location}`)}`);
         }
-        if (config.links.website) {
-          console.log(`  Website: ${chalk.hex("#61afef").underline(config.links.website)}`);
+        if (links.website) {
+          console.log(`  Website: ${chalk.hex("#61afef").underline(links.website)}`);
         }
         console.log("");
       } else if (choice === "create") {
