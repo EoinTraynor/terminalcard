@@ -32,7 +32,7 @@ ${chalk.bold("Examples:")}
   }
 
   if (rawArgs.includes("--version") || rawArgs.includes("-v")) {
-    console.log("1.0.0");
+    console.log("1.0.2");
     return;
   }
 
