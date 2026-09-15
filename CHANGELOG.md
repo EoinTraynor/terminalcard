@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0](https://github.com/EoinTraynor/terminalcard/compare/v1.0.2...v1.1.0) (2026-09-15)
+
+
+### Features
+
+* **ci:** automate versioning and npm releases with Release Please ([1a01fc1](https://github.com/EoinTraynor/terminalcard/commit/1a01fc10d4b1015ab203b7376802969890dc571f))
+* **ci:** automate versioning and npm releases with Release Please ([84e98cb](https://github.com/EoinTraynor/terminalcard/commit/84e98cbdd7c963014ad27e14ab6a0ed27e86a4ab))
+
 ## [1.0.2](https://github.com/EoinTraynor/terminalcard/compare/v1.0.1...v1.0.2) (2026-09-14)
 
 ### Bug Fixes & Security Hardening
